@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/components/scpi'
+let g:netrw_dirhist_6='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/components'
+let g:netrw_dirhist_5='C:\Users\Jkastelic\Documents\projects\CG735\firmware\K66_tutorial\10_SCPI'
+let g:netrw_dirhist_4='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial'
+let g:netrw_dirhist_3='C:\Users\Jkastelic\Documents\projects\CG735\firmware\K66_tutorial\10_SCPI'
+let g:netrw_dirhist_2='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI'
+let g:netrw_dirhist_1='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/armgcc'
+let g:netrw_dirhist_0='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/armgcc/freertos'
+let g:netrw_dirhist_9='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/armgcc/freertos/CMakeFiles'
+let g:netrw_dirhist_8='C:/Users/Jkastelic/Documents/projects/CG735/firmware/K66_tutorial/10_SCPI/armgcc/freertos'
