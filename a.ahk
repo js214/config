@@ -26,6 +26,7 @@ $Esc::Capslock
 <#^!s::Send '√'
 
 ; Greek letters
+^!b::Send 'β'
 ^!+d::Send 'Δ'
 ^!d::Send 'δ'
 ^!+p::Send 'Π'
@@ -38,3 +39,4 @@ $Esc::Capslock
 ^!+s::Send 'Σ'
 ^!s::Send 'σ'
 ^!e::Send 'ε'
+^!t::Send 'θ'

@@ -38,11 +38,13 @@ noremap <F2> <Nop>
 noremap K <C-w><C-w>
 noremap <C-P> <C-B>
 noremap <Tab> :bn<CR>
+command Wall wall
 noremap <S-Tab> :bp<CR>
 nnoremap _ :Explore<CR>
 noremap <F5> @a
 inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 map <F11> <Esc>:call Maximize()<CR>
+nmap <C-n> <Esc>:split Makefile<CR>
 
 " Leader commands
 let mapleader = " "
@@ -63,9 +65,11 @@ noremap <C-5> <Esc>:tabn 5<CR>
 noremap <C-6> <Esc>:tabn 6<CR>
 noremap <C-7> <Esc>:tabn 7<CR>
 noremap <C-8> <Esc>:tabn 8<CR>
-noremap <C-9> <Esc>:tabn 9<CR>
+noremap <C-9> <Esc>:tablast<CR>
 noremap <C-Tab> <Esc>:tabn<CR>
 noremap <C-S-Tab> <Esc>:tabp<CR>
+noremap <C-S-PageUp> <Esc>:tabm -1<CR>
+noremap <C-S-PageDown> <Esc>:tabm +1<CR>
 
 "https://stackoverflow.com/questions/20979403/how-to-add-total-line-count-of-file-to-vim-status-bar
 set statusline =%1*\ %n\ %*            "buffer number
@@ -90,10 +94,12 @@ set nocompatible               " turns off legacy vi mode
 filetype off                   " required!
 set rtp+=~/vimfiles/bundle/vundle/
 call vundle#rc()
+filetype plugin indent on     " required!
+
+" Ack
 Plugin 'mileszs/ack.vim'
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ack_autoclose = 1
-filetype plugin indent on     " required!
 
 " Gui options
 set guioptions-=m  "remove menu bar
