@@ -40,3 +40,5 @@ $Esc::Capslock
 ^!s::Send 'σ'
 ^!e::Send 'ε'
 ^!t::Send 'θ'
+^!h::Send 'η'
+^!r::Send 'ρ'
