@@ -1,12 +1,43 @@
+" Plugins
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'mileszs/ack.vim'
+filetype plugin indent on
+
+" Ack plugin options
+let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ack_autoclose = 1
+
+" Appearance
 syntax on
 colorscheme torte
-cd ~/Documents/temp
 let g:netrw_banner = 0
 
+" Line wrapping
+set fo+=t
+set textwidth=80
+autocmd FileType * set formatoptions+=t
+
+" Visible tabs and trailing spaces
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
+set list listchars=tab:\|-
+
+" Undo options
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=10000
+set undoreload=100000
+
+" Misc options
 set number
 set shiftwidth=3
 set ignorecase
 set autoindent
+set cindent
 set incsearch
 set lbr
 set timeoutlen=500
@@ -15,21 +46,15 @@ set splitbelow
 set splitright
 set expandtab
 set visualbell
-set textwidth=80
+set belloff=all
 set autochdir
 set showmode
 set showcmd
 set ruler
 set laststatus=1
 set hlsearch
-set belloff=all
 
-" Undo options
-set undofile
-set undodir=$HOME/.vim/undo
-set undolevels=10000
-set undoreload=100000
-
+" Misc Mappings
 noremap k gk
 noremap j gj
 noremap Q <Nop>
@@ -43,8 +68,6 @@ noremap <S-Tab> :bp<CR>
 nnoremap _ :Explore<CR>
 noremap <F5> @a
 inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
-map <F11> <Esc>:call Maximize()<CR>
-nmap <C-n> <Esc>:split Makefile<CR>
 
 " Leader commands
 let mapleader = " "
@@ -56,50 +79,18 @@ map <leader>j <C-w>j
 map <leader>f :Ack!<space>
 map <leader>g :let @/=expand("<cword>")<Bar>wincmd w<Bar>normal n<CR>
 
-" Tabs
-noremap <C-1> <Esc>:tabn 1<CR>
-noremap <C-2> <Esc>:tabn 2<CR>
-noremap <C-3> <Esc>:tabn 3<CR>
-noremap <C-4> <Esc>:tabn 4<CR>
-noremap <C-5> <Esc>:tabn 5<CR>
-noremap <C-6> <Esc>:tabn 6<CR>
-noremap <C-7> <Esc>:tabn 7<CR>
-noremap <C-8> <Esc>:tabn 8<CR>
-noremap <C-9> <Esc>:tablast<CR>
-noremap <C-Tab> <Esc>:tabn<CR>
-noremap <C-S-Tab> <Esc>:tabp<CR>
-noremap <C-S-PageUp> <Esc>:tabm -1<CR>
-noremap <C-S-PageDown> <Esc>:tabm +1<CR>
-
-"https://stackoverflow.com/questions/20979403/how-to-add-total-line-count-of-file-to-vim-status-bar
-set statusline =%1*\ %n\ %*            "buffer number
-set statusline +=%5*%{&ff}%*            "file format
-set statusline +=%3*%y%*                "file type
-set statusline +=%4*\ %<%F%*            "full path
-set statusline +=%2*%m%*                "modified flag
-set statusline +=%1*%=%5l%*             "current line
-set statusline +=%2*/%L%*               "total lines
-set statusline +=%1*%4v\ %*             "virtual column number
-set statusline +=%2*0x%04B\ %*          "character under cursor
-
-" Colors for statusline
-hi User1 guifg=#eea040 guibg=#444444
-hi User2 guifg=#dd3333 guibg=#444444
-hi User3 guifg=#ff66ff guibg=#444444
-hi User4 guifg=#a0ee40 guibg=#444444
-hi User5 guifg=#eeee40 guibg=#444444
-
-" Plugins
-set nocompatible               " turns off legacy vi mode
-filetype off                   " required!
-set rtp+=~/vimfiles/bundle/vundle/
-call vundle#rc()
-filetype plugin indent on     " required!
-
-" Ack
-Plugin 'mileszs/ack.vim'
-let g:ackprg = 'ag --nogroup --nocolor --column'
-let g:ack_autoclose = 1
+" Leader commands for Tabs
+map <leader>1 <Esc>:tabn 1<CR>
+map <leader>2 <Esc>:tabn 2<CR>
+map <leader>3 <Esc>:tabn 3<CR>
+map <leader>4 <Esc>:tabn 4<CR>
+map <leader>5 <Esc>:tabn 5<CR>
+map <leader>6 <Esc>:tabn 6<CR>
+map <leader>7 <Esc>:tabn 7<CR>
+map <leader>8 <Esc>:tabn 8<CR>
+map <leader>9 <Esc>:tablast<CR>
+map <leader>n <Esc>:tabn<CR>
+map <leader>p <Esc>:tabp<CR>
 
 " Gui options
 set guioptions-=m  "remove menu bar
@@ -108,21 +99,7 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guitablabel=%t "tabs only display filename, not complete path
 set guifont=Consolas:h10.8:cANSI
-
-function Maximize()
-   if !exists("g:maximized")
-      let g:maximized=0
-   endif
-   if (g:maximized)
-      let g:maximized=0
-      set showtabline=1
-   else
-      let g:maximized=1
-      set showtabline=0
-      redraw
-   endif
-   call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)
-endfunction
+au GUIEnter * simalt ~x
 
 " LaTeX in Markdown
 function! MathAndLiquid()
@@ -148,3 +125,38 @@ endfunction
 
 " Call everytime we open a Markdown file
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
+
+" Automatically highlight Kconfig files
+au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
+
+"https://stackoverflow.com/questions/20979403/how-to-add-total-line-count-of-file-to-vim-status-bar
+set statusline =%1*\ %n\ %*     "buffer number
+set statusline +=%5*%{&ff}%*    "file format
+set statusline +=%3*%y%*        "file type
+set statusline +=%4*\ %<%F%*    "full path
+set statusline +=%2*%m%*        "modified flag
+set statusline +=%1*%=%5l%*     "current line
+set statusline +=%2*/%L%*       "total lines
+set statusline +=%1*%4v\ %*     "virtual column number
+set statusline +=%2*0x%04B\ %*  "character under cursor
+
+" Colors for statusline (terminal mode)
+hi StatusLineNC cterm=NONE
+hi User1 ctermfg=white ctermbg=cyan
+hi User2 ctermfg=white ctermbg=cyan
+hi User3 ctermfg=white ctermbg=cyan
+hi User4 ctermfg=white ctermbg=cyan
+hi User5 ctermfg=white ctermbg=cyan
+
+" Colors for statusline (GUI mode)
+hi User1 guifg=#eea040 guibg=#444444
+hi User2 guifg=#dd3333 guibg=#444444
+hi User3 guifg=#ff66ff guibg=#444444
+hi User4 guifg=#a0ee40 guibg=#444444
+hi User5 guifg=#eeee40 guibg=#444444
+
+" Set block cursor
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
