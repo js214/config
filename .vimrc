@@ -20,10 +20,11 @@ let g:netrw_banner = 0
 set fo+=t
 set textwidth=80
 autocmd FileType * set formatoptions+=t
+set nowrap
 
 " Visible tabs and trailing spaces
 highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
+autocmd FileType * match WhitespaceEOL /\s\+$/
 set list listchars=tab:\|-
 
 " Undo options
@@ -63,8 +64,8 @@ noremap <F2> <Nop>
 noremap K <C-w><C-w>
 noremap <C-P> <C-B>
 noremap <Tab> :bn<CR>
-command Wall wall
 noremap <S-Tab> :bp<CR>
+command Wall wall
 nnoremap _ :Explore<CR>
 noremap <F5> @a
 inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
