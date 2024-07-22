@@ -59,16 +59,13 @@ set hlsearch
 noremap k gk
 noremap j gj
 noremap Q <Nop>
-noremap <F1> <Nop>
-noremap <F2> <Nop>
 noremap K <C-w><C-w>
 noremap <C-P> <C-B>
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 command Wall wall
-nnoremap _ :Explore<CR>
-noremap <F5> @a
-inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+nnoremap _ :Hexplore<CR>
+nnoremap + :Explore<CR>
 
 " Leader commands
 let mapleader = " "
@@ -79,8 +76,6 @@ map <leader>k <C-w>k
 map <leader>j <C-w>j
 map <leader>f :Ack!<space>
 map <leader>g :let @/=expand("<cword>")<Bar>wincmd w<Bar>normal n<CR>
-
-" Leader commands for Tabs
 map <leader>1 <Esc>:tabn 1<CR>
 map <leader>2 <Esc>:tabn 2<CR>
 map <leader>3 <Esc>:tabn 3<CR>
@@ -92,6 +87,56 @@ map <leader>8 <Esc>:tabn 8<CR>
 map <leader>9 <Esc>:tablast<CR>
 map <leader>n <Esc>:tabn<CR>
 map <leader>p <Esc>:tabp<CR>
+
+" Function keys
+map <F1> <Esc>:tabp<CR>
+map <F2> <Esc>:tabn<CR>
+map <F3> <Nop>
+map <F4> <Nop>
+noremap <F5> @a
+inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+" Tab line formatter function
+function! Tabline() abort
+   let l:line = ''
+   let l:current = tabpagenr()
+   for l:i in range(1, tabpagenr('$'))
+      " Distinguish between current and other tabs
+      if l:i == l:current
+         let l:line .= '%#TabLineSel#'
+      else
+         let l:line .= '%#TabLine#'
+      endif
+
+      " Put filename in the tab label
+      let l:label = '|' . fnamemodify(
+               \ bufname(tabpagebuflist(l:i)[tabpagewinnr(l:i) - 1]),
+               \ ':t'
+               \ )
+
+      " Add '[+]' if one of the buffers in the tab page is modified
+      let bufnrlist = tabpagebuflist(l:i)
+      for bufnr in bufnrlist
+         if getbufvar(bufnr, "&modified")
+            let l:label .= '[+]'
+            break
+         endif
+      endfor
+
+      " Assemble tab line from tab labels
+      let l:line .= '%' .  i .  'T' " Starts mouse click target region.
+      let l:line .= ' ' .  l:label .  ' '
+
+   endfor
+   let l:line .= '%#TabLineFill#'
+   let l:line .= '%T' " Ends mouse click target region(s).
+   return l:line
+endfunction
+
+" Format tab line
+set tabline=%!Tabline()
+highlight TabLine ctermbg=white ctermfg=black
+highlight TabLineSel ctermbg=cyan
 
 " Gui options
 set guioptions-=m  "remove menu bar
