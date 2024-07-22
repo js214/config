@@ -109,7 +109,7 @@ function! Tabline() abort
       endif
 
       " Put filename in the tab label
-      let l:label = '|' . fnamemodify(
+      let l:label = fnamemodify(
                \ bufname(tabpagebuflist(l:i)[tabpagewinnr(l:i) - 1]),
                \ ':t'
                \ )
@@ -188,11 +188,11 @@ set statusline +=%2*0x%04B\ %*  "character under cursor
 
 " Colors for statusline (terminal mode)
 hi StatusLineNC cterm=NONE
-hi User1 ctermfg=white ctermbg=cyan
-hi User2 ctermfg=white ctermbg=cyan
-hi User3 ctermfg=white ctermbg=cyan
-hi User4 ctermfg=white ctermbg=cyan
-hi User5 ctermfg=white ctermbg=cyan
+hi User1 ctermfg=black ctermbg=cyan
+hi User2 ctermfg=black ctermbg=cyan
+hi User3 ctermfg=black ctermbg=cyan
+hi User4 ctermfg=black ctermbg=cyan
+hi User5 ctermfg=black ctermbg=cyan
 
 " Colors for statusline (GUI mode)
 hi User1 guifg=#eea040 guibg=#444444
