@@ -6,8 +6,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mileszs/ack.vim'
 filetype plugin indent on
-
-" Ack plugin options
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ack_autoclose = 1
 
@@ -17,7 +15,7 @@ colorscheme torte
 let g:netrw_banner = 0
 
 " Line wrapping
-set fo+=t
+set formatoptions+=t "auto-wrap using textwidth
 set textwidth=80
 autocmd FileType * set formatoptions+=t
 set nowrap
@@ -107,13 +105,11 @@ function! Tabline() abort
       else
          let l:line .= '%#TabLine#'
       endif
-
       " Put filename in the tab label
       let l:label = fnamemodify(
                \ bufname(tabpagebuflist(l:i)[tabpagewinnr(l:i) - 1]),
                \ ':t'
                \ )
-
       " Add '[+]' if one of the buffers in the tab page is modified
       let bufnrlist = tabpagebuflist(l:i)
       for bufnr in bufnrlist
@@ -122,12 +118,11 @@ function! Tabline() abort
             break
          endif
       endfor
-
       " Assemble tab line from tab labels
       let l:line .= '%' .  i .  'T' " Starts mouse click target region.
       let l:line .= ' ' .  l:label .  ' '
-
    endfor
+   " Finish the tab line
    let l:line .= '%#TabLineFill#'
    let l:line .= '%T' " Ends mouse click target region(s).
    return l:line
@@ -135,8 +130,8 @@ endfunction
 
 " Format tab line
 set tabline=%!Tabline()
-highlight TabLine ctermbg=white ctermfg=black
-highlight TabLineSel ctermbg=cyan
+highlight TabLine ctermbg=lightgrey ctermfg=black
+highlight TabLineSel ctermbg=blue
 
 " Gui options
 set guioptions-=m  "remove menu bar
