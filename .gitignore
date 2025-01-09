@@ -5,3 +5,4 @@
 *.swp
 .vim/undo
 .vim/.netrwhist
+.vim/bundle

@@ -5,6 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mileszs/ack.vim'
+call vundle#end()
 filetype plugin indent on
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ack_autoclose = 1
@@ -52,6 +53,7 @@ set showcmd
 set ruler
 set laststatus=1
 set hlsearch
+set mouse=nvi
 
 " Misc Mappings
 noremap k gk
@@ -62,8 +64,14 @@ noremap <C-P> <C-B>
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 command Wall wall
-nnoremap _ :Hexplore<CR>
-nnoremap + :Explore<CR>
+map _ :Hexplore<CR>
+map + :Explore<CR>
+map \ :Texplore<CR>
+map <BS> :vsplit<CR>:Explore<CR>
+map Y "+y
+
+" New commands
+command LinuxStyle :set autoindent noexpandtab tabstop=8 shiftwidth=8
 
 " Leader commands
 let mapleader = " "
@@ -72,6 +80,7 @@ map <leader>h <C-w>h
 map <leader>l <C-w>l
 map <leader>k <C-w>k
 map <leader>j <C-w>j
+map <leader>c :cd ..<CR>:pw<CR>
 map <leader>f :Ack!<space>
 map <leader>g :let @/=expand("<cword>")<Bar>wincmd w<Bar>normal n<CR>
 map <leader>1 <Esc>:tabn 1<CR>
@@ -85,14 +94,17 @@ map <leader>8 <Esc>:tabn 8<CR>
 map <leader>9 <Esc>:tablast<CR>
 map <leader>n <Esc>:tabn<CR>
 map <leader>p <Esc>:tabp<CR>
+map <leader>d <Esc>:bd<CR>
+map <leader>q <Esc>:q<CR>
 
 " Function keys
 map <F1> <Esc>:tabp<CR>
 map <F2> <Esc>:tabn<CR>
-map <F3> <Nop>
-map <F4> <Nop>
+map <F3> <Esc>:windo diffthis<CR>
+map <F4> <Esc>:windo diffoff<CR>
 noremap <F5> @a
-inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+noremap <F12> A // JK edit <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+inoremap <F12> <C-R>=strftime("%m/%d/%Y")<CR>
 
 " Tab line formatter function
 function! Tabline() abort
@@ -130,6 +142,7 @@ endfunction
 
 " Format tab line
 set tabline=%!Tabline()
+highlight TabLine cterm=none
 highlight TabLine ctermbg=lightgrey ctermfg=black
 highlight TabLineSel ctermbg=blue
 
@@ -164,11 +177,10 @@ function! MathAndLiquid()
     hi link math_block Boolean
 endfunction
 
-" Call everytime we open a Markdown file
+" Files based on filename
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
-
-" Automatically highlight Kconfig files
 au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
+au BufRead,BufNewFile *.jlinkscript set filetype=c
 
 "https://stackoverflow.com/questions/20979403/how-to-add-total-line-count-of-file-to-vim-status-bar
 set statusline =%1*\ %n\ %*     "buffer number
@@ -201,3 +213,9 @@ let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
+
+" Ctags
+set tags=./tags,tags;
+
+" Open file read-only if it already has a swapfile
+autocmd SwapExists * let v:swapchoice = "o"
